@@ -3,45 +3,40 @@ using UnityEngine.UI;
 
 public class bullet : MonoBehaviour
 {
-	private bool shoulddestroy = false;
 	public Text count;
-	private AudioSource sfx;
-	private BoxCollider2D colb;
-	private SpriteRenderer sp;
+
+	public AudioSource sfx;
+
+	private Vector3 vel;
+
+	private Rigidbody2D rb;
 
     private void Start()
     {
-		sfx = this.GetComponent<AudioSource>();
-		sp = this.GetComponent<SpriteRenderer>();
-		colb = this.GetComponent<BoxCollider2D>();
+		GameObject g = Instantiate(sfx.gameObject);
+		g.SetActive(true);
+		rb = this.gameObject.GetComponent<Rigidbody2D>();
+		vel = rb.velocity;
 	}
 
-	private void OnCollisionEnter2D(Collision2D col)
-	{
-		if (col.collider.tag == "wall")
-		{
-			colb.enabled = false;
-			sp.enabled = false;
-			shoulddestroy = true;
-		}
-		else if (col.collider.tag == "enemy")
-		{
-			colb.enabled = true;
-			sp.enabled = false;
-			shoulddestroy = true;
-		}
-		else if (col.collider.tag == "Player")
-        {
-			colb.enabled = false;
-			sp.enabled = false;
-			shoulddestroy = true;
-		}
-	}
     private void Update()
     {
-		if (shoulddestroy = true && !sfx.isPlaying)
+		rb.velocity = vel;
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+	{
+        if (col.collider.tag == "wall" || col.collider.tag == "box")
         {
-			Destroy(this.gameObject);
-		}
+            Destroy(this.gameObject);
+        }
+        else if (col.collider.tag == "Player")
+        {
+            Destroy(this.gameObject);
+        }
+        else if (col.collider.tag == "enemy")
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
