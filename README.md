@@ -1,6 +1,7 @@
 # shadowshittyunityscripts - ssus
 
-a collection of useful unity scripts
+a collection of useful unity scripts 
+(also these scripts have xinput controller support)
 
 !!! may require changes in the code to work in other games !!!
 
